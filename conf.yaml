@@ -1,0 +1,105 @@
+logging:
+  level: DEBUG
+
+pipeline:
+
+  # Disable cloud MaaS
+  maas:
+    enabled: false
+
+  # Self-hosted OCR server
+  ocr_api:
+    api_host: 10.0.1.45
+    api_port: 8002
+    api_mode: openai
+    api_path: /v1/chat/completions
+    api_key: p7D496Ayj8lh
+    verify_ssl: false
+    connect_timeout: 60
+    request_timeout: 300
+    max_retries: 4
+    connection_pool_size: 128
+
+  page_maxsize: 10000
+  region_maxsize: 800
+
+  enable_layout: true
+
+  page_loader:
+    max_tokens: 32000
+    temperature: 0.1     
+    top_p: 0.9        
+    top_k: 10
+    repetition_penalty: 1.1
+    image_format: PNG
+    pdf_dpi: 400
+    min_pixels: 100800
+    max_pixels: 71372800
+
+  result_formatter:
+    output_format: both
+
+  layout:
+    model_dir: PaddlePaddle/PP-DocLayoutV3_safetensors
+    threshold: 0.3
+    batch_size: 1
+    workers: 1
+    cuda_visible_devices: "0"
+
+    id2label:
+      0: abstract
+      1: algorithm
+      2: aside_text
+      3: chart
+      4: content
+      5: display_formula
+      6: doc_title
+      7: figure_title
+      8: footer
+      9: footer_image
+      10: footnote
+      11: formula_number
+      12: header
+      13: header_image
+      14: image
+      15: inline_formula
+      16: number
+      17: paragraph_title
+      18: reference
+      19: reference_content
+      20: seal
+      21: table
+      22: text
+      23: vertical_text
+      24: vision_footnote
+    label_task_mapping:
+      text:
+        - abstract
+        - aside_text
+        - content
+        - doc_title
+        - footer
+        - footnote
+        - header
+        - number
+        - paragraph_title
+        - reference
+        - reference_content
+        - text
+        - vertical_text
+        - vision_footnote
+        - algorithm
+      table:
+        - table
+      figure:
+        - image
+        - figure_title
+        - chart
+        - header_image
+        - footer_image
+      formula:
+        - display_formula
+        - inline_formula
+        - formula_number
+      abandon:
+        - seal
