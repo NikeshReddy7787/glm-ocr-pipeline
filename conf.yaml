@@ -9,8 +9,8 @@ pipeline:
 
   # Self-hosted OCR server
   ocr_api:
-    api_host: 10.0.1.45
-    api_port: 8002
+    api_host: sonar.vassardigital.ai      # ← Change this
+    api_port: 443 
     api_mode: openai
     api_path: /v1/chat/completions
     api_key: p7D496Ayj8lh
